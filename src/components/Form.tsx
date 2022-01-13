@@ -5,10 +5,14 @@ import { AddressesContext } from "../contexts/addresses.context";
 export default function Form({ defaultValues, children, onSubmit }: any) {
   const methods = useForm({ defaultValues });
   const { handleSubmit } = methods;
-  const { activeAddress } = useContext(AddressesContext);
+  const { activeAddress, setActiveAddress } = useContext(AddressesContext);
   useEffect(() => {
     // reset form with user data
     methods.reset({ ...activeAddress });
+    return () => {
+      setActiveAddress(null);
+      methods.reset();
+    };
   }, [activeAddress]);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
