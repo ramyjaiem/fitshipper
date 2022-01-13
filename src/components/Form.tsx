@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { AddressesContext } from "../contexts/addresses.context";
 
 export default function Form({ defaultValues, children, onSubmit }: any) {
   const methods = useForm({ defaultValues });
   const { handleSubmit } = methods;
-
+  const { activeAddress } = useContext(AddressesContext);
+  useEffect(() => {
+    // reset form with user data
+    methods.reset({ ...activeAddress });
+  }, [activeAddress]);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {React.Children.map(children, (child) => {

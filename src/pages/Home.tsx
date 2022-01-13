@@ -73,7 +73,11 @@ const Home = (props: Props) => {
             </header>
             <div className="p-3">
               <div className="overflow-x-auto">
-                <Table columns={columns} data={addressesList} />
+                <Table
+                  columns={columns}
+                  data={addressesList}
+                  openModal={openModal}
+                />
               </div>
             </div>
           </div>

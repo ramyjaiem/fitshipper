@@ -1,4 +1,9 @@
-import React, { MouseEventHandler, useContext, useState } from "react";
+import React, {
+  MouseEventHandler,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import Input from "./Input";
 import { AiOutlineClose } from "react-icons/ai";
 import InputArea from "./InputArea";
@@ -6,6 +11,7 @@ import { useForm } from "react-hook-form";
 import Form from "./Form";
 import Modal from "react-modal";
 import { AddressesContext } from "../contexts/addresses.context";
+import { transformData } from "../utils/tools";
 
 interface Props {
   closeModal: MouseEventHandler;
@@ -14,11 +20,32 @@ interface Props {
 
 const ModalContainer = ({ closeModal, modalIsOpen }: Props) => {
   const [switchForm, setSwitchForm] = useState(true);
-  const { handleSubmit, register } = useForm();
-  const { saveAddress } = useContext(AddressesContext);
 
-  const onSubmit = (data: any) => saveAddress(data).then(closeModal);
+  const { saveAddress, setActiveAddress, updateAdrress, activeAddress } =
+    useContext(AddressesContext);
+  const { register, reset } = useForm({ defaultValues: { name: "anything" } });
 
+  const onSubmit = (data: any) => {
+    if (!switchForm) {
+      let transformedData = transformData(data?.freeText);
+      if (transformedData) {
+        activeAddress
+          ? updateAdrress({ ...transformedData, id: activeAddress.id }).then(
+              closeModal
+            )
+          : saveAddress(transformedData).then(closeModal);
+      }
+    } else {
+      activeAddress
+        ? updateAdrress(data).then(closeModal)
+        : saveAddress(data).then(closeModal);
+    }
+  };
+  useEffect(() => {
+    return () => {
+      setActiveAddress(null);
+    };
+  }, []);
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -94,7 +121,6 @@ const ModalContainer = ({ closeModal, modalIsOpen }: Props) => {
 
                         <div className="py-3 sm:flex sm:flex-row-reverse mt-10">
                           <button
-                            onClick={(e) => e.preventDefault()}
                             type="submit"
                             className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                           >
@@ -110,18 +136,20 @@ const ModalContainer = ({ closeModal, modalIsOpen }: Props) => {
                         </div>
                       </Form>
                     ) : (
-                      <>
+                      <Form onSubmit={onSubmit}>
                         <InputArea
-                          name="name"
+                          register={register}
+                          name="freeText"
                           placeholder="Address (free-form)"
                           extra="Copy & past the full address"
                         />
+
                         <div className="py-3 sm:flex sm:flex-row-reverse mt-10">
                           <button
                             type="submit"
                             className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                           >
-                            Save
+                            {activeAddress ? "Edit" : "Save"}
                           </button>
                           <button
                             type="button"
@@ -131,7 +159,7 @@ const ModalContainer = ({ closeModal, modalIsOpen }: Props) => {
                             Cancel
                           </button>
                         </div>
-                      </>
+                      </Form>
                     )}
                   </div>
                 </div>

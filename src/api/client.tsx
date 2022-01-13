@@ -8,3 +8,4 @@ export const GET_ADDRESS = "/address";
 export const SAVE_ADDRESS = "/address";
 
 export const DELETE_ADDRESS = (id: string) => `/address/${id}`;
+export const UPDATE_ADDRESS = (id: number) => `/address/${id}`;

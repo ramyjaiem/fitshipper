@@ -1,5 +1,11 @@
 import { Address } from "../utils/modules";
-import { client, DELETE_ADDRESS, GET_ADDRESS, SAVE_ADDRESS } from "./client";
+import {
+  client,
+  DELETE_ADDRESS,
+  GET_ADDRESS,
+  SAVE_ADDRESS,
+  UPDATE_ADDRESS,
+} from "./client";
 
 export const getAddressesService = async () => {
   const response = await client.get(GET_ADDRESS);
@@ -13,5 +19,10 @@ export const deleteAddressService = async (id: string) => {
 
 export const saveAddressService = async (data: Address) => {
   const response = await client.post(SAVE_ADDRESS, { ...data });
+  return response.data;
+};
+
+export const updateAddressService = async (data: Address, id: number) => {
+  const response = await client.patch(UPDATE_ADDRESS(id), { ...data });
   return response.data;
 };

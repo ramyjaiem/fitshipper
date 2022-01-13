@@ -3,6 +3,7 @@ import {
   deleteAddressService,
   getAddressesService,
   saveAddressService,
+  updateAddressService,
 } from "../api/services";
 import { Address } from "../utils/modules";
 
@@ -17,6 +18,7 @@ interface AddressesContextProps {
   setActiveAddress: Function;
   deleteAddress: Function;
   saveAddress: Function;
+  updateAdrress: Function;
 }
 export const AddressesContext = createContext<AddressesContextProps>({
   addressesList: [],
@@ -25,6 +27,7 @@ export const AddressesContext = createContext<AddressesContextProps>({
   setActiveAddress: (address: Address) => console.log(address),
   deleteAddress: (address: Address) => console.log(address),
   saveAddress: (address: Address) => console.log(address),
+  updateAdrress: (address: Address) => console.log(address),
 });
 const AddressesProvider = ({ children }: Props) => {
   const [addressesList, setAddressesList] = useState<Address[]>([]);
@@ -40,9 +43,18 @@ const AddressesProvider = ({ children }: Props) => {
     getAddressesService().then(setAddressesList);
   };
 
+  // save an address
   const saveAddress = async (data: Address) => {
-    saveAddressService(data).then(setAddressesList);
+    saveAddressService(data).then(getAddresses);
   };
+
+  //edit an address
+  const updateAdrress = async (data: Address) => {
+    if (data.id) {
+      updateAddressService(data, data.id).then(getAddresses);
+    }
+  };
+
   // get addresses on mount
   useEffect(() => {
     getAddresses();
@@ -57,6 +69,7 @@ const AddressesProvider = ({ children }: Props) => {
         setActiveAddress,
         deleteAddress,
         saveAddress,
+        updateAdrress,
       }}
     >
       {children}

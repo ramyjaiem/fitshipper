@@ -6,10 +6,11 @@ import { Address } from "../utils/modules";
 interface Props {
   columns: Column<Address>[];
   data: Address[];
+  openModal: Function;
 }
 
-const Table = ({ columns, data }: Props) => {
-  const { deleteAddress } = useContext(AddressesContext);
+const Table = ({ columns, data, openModal }: Props) => {
+  const { deleteAddress, setActiveAddress } = useContext(AddressesContext);
   const {
     getTableProps,
     getTableBodyProps,
@@ -78,7 +79,13 @@ const Table = ({ columns, data }: Props) => {
                   );
                 })}
                 <td className="p-2 whitespace-nowrap">
-                  <button className="text-indigo-400 hover:text-indigo-600">
+                  <button
+                    className="text-indigo-400 hover:text-indigo-600"
+                    onClick={() => {
+                      setActiveAddress(row.original);
+                      openModal();
+                    }}
+                  >
                     Edit
                   </button>
                 </td>
