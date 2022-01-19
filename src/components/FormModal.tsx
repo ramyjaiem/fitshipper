@@ -1,9 +1,4 @@
-import React, {
-  MouseEventHandler,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { MouseEventHandler, useContext, useState } from "react";
 import Input from "./Input";
 import { AiOutlineClose } from "react-icons/ai";
 import InputArea from "./InputArea";
@@ -21,7 +16,7 @@ interface Props {
 const ModalContainer = ({ closeModal, modalIsOpen }: Props) => {
   const [switchForm, setSwitchForm] = useState(true);
 
-  const { saveAddress, setActiveAddress, updateAdrress, activeAddress } =
+  const { saveAddress, updateAdrress, activeAddress } =
     useContext(AddressesContext);
   const { register, reset } = useForm({ defaultValues: { name: "anything" } });
 
@@ -84,31 +79,37 @@ const ModalContainer = ({ closeModal, modalIsOpen }: Props) => {
                     {switchForm ? (
                       <Form onSubmit={onSubmit}>
                         <Input
+                          label="Name"
                           name="name"
                           placeholder="Name"
                           register={register}
                         />
                         <Input
+                          label="Address"
                           name="address1"
                           placeholder="Address"
                           register={register}
                         />
                         <Input
+                          label="Address 2"
                           name="address2"
                           placeholder="Address 2"
                           register={register}
                         />
                         <Input
+                          label="City"
                           name="city"
                           placeholder="City"
                           register={register}
                         />
                         <Input
+                          label="State"
                           name="state"
                           placeholder="State"
                           register={register}
                         />
                         <Input
+                          label="Zip"
                           name="zip"
                           placeholder="Zip"
                           register={register}

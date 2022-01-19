@@ -6,7 +6,7 @@ const NavBar = (props: Props) => {
   return (
     <header className="header bg-white shadow py-4 px-4">
       <div className="header-content flex items-center flex-row">
-        <div className="flex ml-auto mr-5">
+        <div className="flex ml-auto mr-6">
           <a className="flex flex-row items-center">
             <img
               src="https://pbs.twimg.com/profile_images/378800000298815220/b567757616f720812125bfbac395ff54_normal.png"

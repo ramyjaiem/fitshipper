@@ -15,6 +15,7 @@ interface AddressesContextProps {
   addressesList: Address[];
   setAddressesList: Function;
   activeAddress: Address | null;
+  total: number | null;
   setActiveAddress: Function;
   deleteAddress: Function;
   saveAddress: Function;
@@ -28,10 +29,12 @@ export const AddressesContext = createContext<AddressesContextProps>({
   deleteAddress: (address: Address) => console.log(address),
   saveAddress: (address: Address) => console.log(address),
   updateAdrress: (address: Address) => console.log(address),
+  total: null,
 });
 const AddressesProvider = ({ children }: Props) => {
   const [addressesList, setAddressesList] = useState<Address[]>([]);
   const [activeAddress, setActiveAddress] = useState<Address | null>(null);
+  const [total, setTotal] = useState<number | null>(null);
 
   // delete selected address by id
   const deleteAddress = async (id: string) => {
@@ -40,7 +43,10 @@ const AddressesProvider = ({ children }: Props) => {
 
   // get all addresses
   const getAddresses = async () => {
-    getAddressesService().then(setAddressesList);
+    getAddressesService().then((result) => {
+      setAddressesList(result);
+      setTotal(result?.length);
+    });
   };
 
   // save an address
@@ -70,6 +76,7 @@ const AddressesProvider = ({ children }: Props) => {
         deleteAddress,
         saveAddress,
         updateAdrress,
+        total,
       }}
     >
       {children}
