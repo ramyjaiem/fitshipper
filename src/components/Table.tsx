@@ -35,7 +35,7 @@ const Table = ({ columns, data, openModal }: Props) => {
   );
   return (
     <>
-      <table className="table-auto w-full" {...getTableProps()}>
+      <table className="table-auto w-full " {...getTableProps()}>
         <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
