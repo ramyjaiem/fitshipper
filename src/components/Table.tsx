@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTable, useSortBy, Column, usePagination } from "react-table";
 import { AddressesContext } from "../contexts/addresses.context";
 import { Address } from "../utils/modules";
@@ -10,7 +11,7 @@ interface Props {
 }
 
 const Table = ({ columns, data, openModal }: Props) => {
-  const { deleteAddress, setActiveAddress } = useContext(AddressesContext);
+  const { deleteAddress } = useContext(AddressesContext);
   const {
     getTableProps,
     getTableBodyProps,
@@ -33,15 +34,17 @@ const Table = ({ columns, data, openModal }: Props) => {
     useSortBy,
     usePagination
   );
+
+  const navigate = useNavigate();
   return (
     <>
       <table className="table-auto w-full " {...getTableProps()}>
-        <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+        <thead className="py-4 font-semibold uppercase text-gray-500 bg-gray-50 ">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
-                  className="p-2 whitespace-nowrap"
+                  className="p-2 whitespace-nowrap text-left"
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   {column.render("Header")}
@@ -64,14 +67,13 @@ const Table = ({ columns, data, openModal }: Props) => {
           {...getTableBodyProps()}
         >
           {page.map((row, i) => {
-            console.log(row);
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
                     <td
-                      className="p-2 whitespace-nowrap"
+                      className="px-2 py-3 whitespace-nowrap"
                       {...cell.getCellProps()}
                     >
                       {cell.render("Cell")}
@@ -82,8 +84,7 @@ const Table = ({ columns, data, openModal }: Props) => {
                   <button
                     className="text-indigo-400 hover:text-indigo-600"
                     onClick={() => {
-                      setActiveAddress(row.original);
-                      openModal();
+                      navigate(`/addresses/edit/${row.original.id}`);
                     }}
                   >
                     Edit
@@ -133,7 +134,7 @@ const Table = ({ columns, data, openModal }: Props) => {
       </div>
 
       <select
-        className="float-right mr-2"
+        className="float-right mb-2 mr-4"
         value={pageSize}
         onChange={(e) => {
           setPageSize(Number(e.target.value));

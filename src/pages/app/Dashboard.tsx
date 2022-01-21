@@ -7,11 +7,7 @@ interface Props {}
 
 const Dashboard = (props: Props) => {
   const { user } = useContext(AuthContext);
-  return (
-    <DefaultLayout>
-      <PageContainer title={`Welcome, ${user?.email}!`}></PageContainer>
-    </DefaultLayout>
-  );
+  return <PageContainer title={`Welcome, ${user?.email}!`}></PageContainer>;
 };
 
 export default Dashboard;

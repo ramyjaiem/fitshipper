@@ -24,7 +24,7 @@ const SideBar = (props: Props) => {
         <ul className="flex flex-col w-full">
           <li className="my-px">
             <NavLink
-              to="/"
+              to="/home"
               className={({ isActive }) =>
                 `flex flex-row items-center h-10 px-3 rounded-lg  hover:bg-gray-100 hover:text-gray-700 ${
                   isActive ? "text-gray-700 bg-gray-100" : "text-gray-300"

@@ -4,6 +4,7 @@ import {
   getAddressesService,
   saveAddressService,
   updateAddressService,
+  getActiveAddressService,
 } from "../api/services";
 import { Address } from "../utils/modules";
 
@@ -16,25 +17,32 @@ interface AddressesContextProps {
   setAddressesList: Function;
   activeAddress: Address | null;
   total: number | null;
+  fetchActiveAddress: Function;
   setActiveAddress: Function;
   deleteAddress: Function;
   saveAddress: Function;
   updateAdrress: Function;
+  search: string;
+  setSearch: Function;
 }
 export const AddressesContext = createContext<AddressesContextProps>({
   addressesList: [],
   setAddressesList: (addresses: Address[]) => console.log(addresses),
   activeAddress: null,
-  setActiveAddress: (address: Address) => console.log(address),
+  fetchActiveAddress: (id: string) => console.log(id),
   deleteAddress: (address: Address) => console.log(address),
   saveAddress: (address: Address) => console.log(address),
+  setActiveAddress: (address: Address) => console.log(address),
   updateAdrress: (address: Address) => console.log(address),
   total: null,
+  search: "",
+  setSearch: (search: string) => console.log(search),
 });
 const AddressesProvider = ({ children }: Props) => {
   const [addressesList, setAddressesList] = useState<Address[]>([]);
   const [activeAddress, setActiveAddress] = useState<Address | null>(null);
   const [total, setTotal] = useState<number | null>(null);
+  const [search, setSearch] = useState<string>("");
 
   // delete selected address by id
   const deleteAddress = async (id: string) => {
@@ -42,8 +50,8 @@ const AddressesProvider = ({ children }: Props) => {
   };
 
   // get all addresses
-  const getAddresses = async () => {
-    getAddressesService().then((result) => {
+  const getAddresses = async (search: string) => {
+    getAddressesService(search).then((result) => {
       setAddressesList(result);
       setTotal(result?.length);
     });
@@ -63,20 +71,26 @@ const AddressesProvider = ({ children }: Props) => {
 
   // get addresses on mount
   useEffect(() => {
-    getAddresses();
-  }, []);
+    getAddresses(search);
+  }, [search]);
 
+  const fetchActiveAddress = (id: string) => {
+    getActiveAddressService(id).then(setActiveAddress);
+  };
   return (
     <AddressesContext.Provider
       value={{
         addressesList,
         setAddressesList,
         activeAddress,
+        fetchActiveAddress,
         setActiveAddress,
         deleteAddress,
         saveAddress,
         updateAdrress,
         total,
+        search,
+        setSearch,
       }}
     >
       {children}

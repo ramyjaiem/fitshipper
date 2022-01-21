@@ -1,22 +1,37 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { ChangeHandler, useForm } from "react-hook-form";
 
 interface Props {
   placeholder: string;
   name: string;
   label?: string;
   className?: string;
+  type?: string;
   register?: any;
+  onChange?: Function;
+  value?: string;
 }
 
-const Input = ({ placeholder, name, register, label, className }: Props) => {
+const Input = ({
+  placeholder,
+  name,
+  register,
+  label,
+  className,
+  onChange,
+  type,
+  value,
+}: Props) => {
   return (
-    <div className={`w-full flex flex-col gap-1 mt-4 ${className}`}>
-      {label && <label className="font-semibold text-gray-600">{label}</label>}
+    <div className={`w-full flex flex-col gap-2 mt-6 ${className}`}>
+      {label && <label className="font-semibold text-gray-500">{label}</label>}
       <input
-        type="text"
+        key={name}
+        onChange={onChange}
+        type={type}
+        value={value}
         placeholder={placeholder}
-        className="px-4 py-2  w-full border-2 rounded-md"
+        className="px-4 py-2 bg-gray-50  w-full border-2 rounded-md"
         {...(register && register(name))}
       />
     </div>
