@@ -1,8 +1,4 @@
-import React from "react";
-
-interface Props {}
-
-const Error = (props: Props) => {
+const Error = () => {
   return <div></div>;
 };
 

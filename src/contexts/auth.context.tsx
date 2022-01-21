@@ -1,4 +1,4 @@
-import React, { createContext, ReactChild, useEffect, useState } from "react";
+import { createContext, ReactChild, useEffect, useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -37,7 +37,7 @@ export const AuthContext = createContext<AuthContextProps>({
   loading: true,
 });
 const AuthProvider = ({ children }: Props) => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();

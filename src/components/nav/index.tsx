@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../contexts/auth.context";
 
-interface Props {}
-
-const NavBar = (props: Props) => {
+const NavBar = () => {
   const { user } = useContext(AuthContext);
   return (
     <header className="header bg-white border-b-2 border-gray-200 py-4 px-4">

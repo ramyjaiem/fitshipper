@@ -1,27 +1,35 @@
-import React, { MouseEventHandler, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import Input from "../Input";
-import {
-  AiOutlineClose,
-  AiOutlinePlus,
-  AiOutlinePlusCircle,
-} from "react-icons/ai";
+import { AiOutlineSave } from "react-icons/ai";
 import InputArea from "../InputArea";
 import { useForm } from "react-hook-form";
 import Form from "../Form";
-import Modal from "react-modal";
 import { AddressesContext } from "../../contexts/addresses.context";
 import { transformData } from "../../utils/tools";
 import Button from "../Button";
 import { AiOutlineEdit } from "react-icons/ai";
+import * as yup from "yup";
+import useYupValidationResolver from "../../hooks/useYupValidationResolver";
 
-interface Props {}
+const validationSchema = yup.object({
+  name: yup.string().required("Required"),
+  address1: yup.string().required("Required"),
+  address2: yup.string(),
+  city: yup.string().required("Required"),
+  state: yup.string().required("Required"),
+  zip: yup.string().required("Required"),
+});
 
-const AddressForm = ({}: Props) => {
+const AddressForm = () => {
   const [switchForm, setSwitchForm] = useState(true);
 
   const { saveAddress, updateAdrress, activeAddress } =
     useContext(AddressesContext);
-  const { register } = useForm({ defaultValues: { name: "anything" } });
+
+  const resolver = useYupValidationResolver(validationSchema);
+  const { register } = useForm({
+    resolver,
+  });
 
   const onSubmit = (data: any) => {
     if (!switchForm) {
@@ -94,10 +102,10 @@ const AddressForm = ({}: Props) => {
                       activeAddress ? (
                         <AiOutlineEdit size={24} />
                       ) : (
-                        <AiOutlinePlus size={24} />
+                        <AiOutlineSave size={24} />
                       )
                     }
-                    className="w-full my-5 float-right inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-auto my-5 float-right inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 "
                   />
                 </Form>
               ) : (
@@ -114,11 +122,11 @@ const AddressForm = ({}: Props) => {
                       activeAddress ? (
                         <AiOutlineEdit size={24} />
                       ) : (
-                        <AiOutlinePlus size={24} />
+                        <AiOutlineSave size={24} />
                       )
                     }
                     label={activeAddress ? "Edit" : "Save"}
-                    className="w-full my-5 float-right inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-auto my-5 float-right inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white  focus:outline-none focus:ring-2 focus:ring-offset-2  "
                   />
                 </Form>
               )}

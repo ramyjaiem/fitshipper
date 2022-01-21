@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { AddressesContext } from "../contexts/addresses.context";
+import { getFreeText } from "../utils/tools";
 
 export default function Form({ defaultValues, children, onSubmit }: any) {
   const methods = useForm({ defaultValues });
@@ -8,7 +9,9 @@ export default function Form({ defaultValues, children, onSubmit }: any) {
   const { activeAddress } = useContext(AddressesContext);
   useEffect(() => {
     // reset form with user data
-    methods.reset({ ...activeAddress });
+    if (activeAddress) {
+      methods.reset({ ...activeAddress, freeText: getFreeText(activeAddress) });
+    }
     return () => {
       methods.reset();
     };

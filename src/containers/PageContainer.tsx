@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactNode } from "react";
+import { ReactChild, ReactNode } from "react";
 interface Props {
   children?: ReactChild;
   title: string;

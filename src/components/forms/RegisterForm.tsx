@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/auth.context";
 import Button from "../Button";
@@ -45,7 +45,7 @@ const RegisterForm = () => {
         onClick={() => createAccount(email, password1, password2)}
       />
       <div className="text-center font-base ">
-        Already have an account ?{" "}
+        Already have an account?{" "}
         <Link to="/login" className="font-bold text-slate-800">
           Login
         </Link>

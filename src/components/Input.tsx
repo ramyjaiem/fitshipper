@@ -1,6 +1,3 @@
-import React from "react";
-import { ChangeHandler, useForm } from "react-hook-form";
-
 interface Props {
   placeholder: string;
   name: string;

@@ -1,13 +1,4 @@
-import React, { ReactComponentElement, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  useTable,
-  useSortBy,
-  Column,
-  usePagination,
-  actions,
-} from "react-table";
-import { AddressesContext } from "../contexts/addresses.context";
+import { useTable, useSortBy, Column, usePagination } from "react-table";
 import { Address } from "../utils/modules";
 
 interface Props {
@@ -17,7 +8,6 @@ interface Props {
 }
 
 const Table = ({ columns, data, action }: Props) => {
-  const { deleteAddress } = useContext(AddressesContext);
   const {
     getTableProps,
     getTableBodyProps,
@@ -41,17 +31,17 @@ const Table = ({ columns, data, action }: Props) => {
     usePagination
   );
 
-  const navigate = useNavigate();
   return (
     <>
       <table className="table-auto w-full " {...getTableProps()}>
         <thead className="py-4 font-semibold uppercase text-gray-500 bg-gray-50 ">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
+          {headerGroups.map((headerGroup, i) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+              {headerGroup.headers.map((column, index) => (
                 <th
                   className="p-2 whitespace-nowrap text-left"
                   {...column.getHeaderProps(column.getSortByToggleProps())}
+                  key={index}
                 >
                   {column.render("Header")}
                   <span className="font-semibold text-left">
@@ -75,12 +65,13 @@ const Table = ({ columns, data, action }: Props) => {
           {page.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
+              <tr {...row.getRowProps()} key={i}>
+                {row.cells.map((cell, index) => {
                   return (
                     <td
                       className="px-2 py-3 whitespace-nowrap"
                       {...cell.getCellProps()}
+                      key={index}
                     >
                       {cell.render("Cell")}
                     </td>

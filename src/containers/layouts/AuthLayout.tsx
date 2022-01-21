@@ -1,6 +1,4 @@
-import React, { ReactChild } from "react";
-import AddressesProvider from "../../contexts/addresses.context";
-import AuthProvider from "../../contexts/auth.context";
+import { ReactChild } from "react";
 
 interface Props {
   children: ReactChild;

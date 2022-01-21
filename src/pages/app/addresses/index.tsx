@@ -9,9 +9,7 @@ import { useNavigate } from "react-router-dom";
 import ModalContainer from "../../../containers/ModalContainer";
 import Modal from "react-modal";
 
-interface Props {}
-
-const Addresses = (props: Props) => {
+const Addresses = () => {
   const { addressesList, total, search, setSearch, deleteAddress } =
     useContext(AddressesContext);
   const navigate = useNavigate();
@@ -63,6 +61,7 @@ const Addresses = (props: Props) => {
       action={
         <Button
           label="Create"
+          className="bg-green-600"
           onClick={() => navigate("/addresses/create")}
           icon={<AiOutlinePlusCircle size={24} />}
         />

@@ -1,4 +1,4 @@
-import React, { createContext, ReactChild, useEffect, useState } from "react";
+import { createContext, ReactChild, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -55,7 +55,7 @@ const AddressesProvider = ({ children }: Props) => {
         getAddresses("");
         toast.success("Address deleted successfully !", TOASTER_SETTINGS);
       })
-      .catch(({ message }) =>
+      .catch(() =>
         toast.error(
           "We are having trouble deleting your address",
           TOASTER_SETTINGS
@@ -99,7 +99,14 @@ const AddressesProvider = ({ children }: Props) => {
   }, [search]);
 
   const fetchActiveAddress = (id: string) => {
-    getActiveAddressService(id).then(setActiveAddress);
+    getActiveAddressService(id)
+      .then(setActiveAddress)
+      .catch(() =>
+        toast.error(
+          "We are having trouble retrieving your address",
+          TOASTER_SETTINGS
+        )
+      );
   };
   return (
     <AddressesContext.Provider

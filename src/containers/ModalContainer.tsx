@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactElement } from "react";
+import { ReactChild, ReactElement } from "react";
 
 interface Props {
   action: ReactElement;

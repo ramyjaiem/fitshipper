@@ -1,23 +1,20 @@
-import React from "react";
 import {
   AiOutlineHome,
   AiOutlineProfile,
   AiOutlineSetting,
 } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-interface Props {}
-
-const SideBar = (props: Props) => {
+const SideBar = () => {
   return (
-    <aside className="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-slate-800">
+    <aside className="sidebar fixed min-h-screen  w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-slate-800">
       <div className="sidebar-header flex items-center justify-center py-6">
         <div className="inline-flex">
-          <a href="#" className="inline-flex flex-row items-center">
+          <Link to="/home" className="inline-flex flex-row items-center">
             <span className="leading-10 text-gray-100 text-3xl font-bold ml-1 uppercase">
               FITSHIPPER
             </span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="sidebar-content px-4 py-6">
