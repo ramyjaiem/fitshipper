@@ -27,7 +27,7 @@ interface AuthContextProps {
   resetPassword: Function;
 }
 
-export const AuthContext = createContext<AuthContextProps>({
+export const AuthContextMock = {
   login: () => console.log(""),
   createAccount: () => console.log(""),
   logout: () => console.log(""),
@@ -35,7 +35,8 @@ export const AuthContext = createContext<AuthContextProps>({
   user: undefined,
   errorMessage: null,
   loading: true,
-});
+};
+export const AuthContext = createContext<AuthContextProps>(AuthContextMock);
 const AuthProvider = ({ children }: Props) => {
   const [user, loading] = useAuthState(auth);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -49,12 +50,15 @@ const AuthProvider = ({ children }: Props) => {
 
   // login user function
   const login = (email: string, password: string) => {
+    if (!(email && password)) {
+      setErrorMessage("Invalid login");
+      return;
+    }
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        if (res) {
-          navigate("/home");
-          toast.success("You are logged In !", TOASTER_SETTINGS);
-        }
+        navigate("/home");
+        toast.success("You are logged In !", TOASTER_SETTINGS);
+        setErrorMessage(null);
       })
       .catch((error) => {
         console.log(error.code);

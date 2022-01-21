@@ -4,7 +4,13 @@ import { AddressesContext } from "../../../contexts/addresses.context";
 import PageContainer from "../../../containers/PageContainer";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
-import { AiOutlinePlusCircle, AiOutlineWarning } from "react-icons/ai";
+import {
+  AiFillEdit,
+  AiOutlineDelete,
+  AiOutlineEdit,
+  AiOutlinePlusCircle,
+  AiOutlineWarning,
+} from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import ModalContainer from "../../../containers/ModalContainer";
 import Modal from "react-modal";
@@ -121,21 +127,21 @@ const Addresses = () => {
                     <>
                       <td className="p-2 whitespace-nowrap">
                         <button
-                          className="text-indigo-400 hover:text-indigo-600"
+                          className="text-slate-500 hover:text-slate-800"
                           onClick={() => {
                             navigate(`/addresses/edit/${id}`);
                           }}
                         >
-                          Edit
+                          <AiOutlineEdit size={24} />
                         </button>
                       </td>
 
                       <td className="p-2 whitespace-nowrap">
                         <button
-                          className="text-red-400 hover:text-red-600"
+                          className="text-red-500 hover:text-red-800"
                           onClick={() => openModal(id)}
                         >
-                          Delete
+                          <AiOutlineDelete size={24} />
                         </button>
                       </td>
                     </>

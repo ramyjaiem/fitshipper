@@ -16,6 +16,7 @@ import EditAddress from "./pages/app/addresses/EditAddress";
 import ResetPassword from "./pages/auth/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ErrorPage from "./pages/Error";
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -39,6 +40,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/reset" element={<ResetPassword />} />
+              <Route path="/*" element={<ErrorPage />} />
               <Route path="/" element={<DefaultLayout />}>
                 <Route path="/" element={<ProtectedRoute />}>
                   <Route path="/home" element={<Dashboard />} />

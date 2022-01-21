@@ -35,7 +35,7 @@ const LoginForm = () => {
         onClick={() => login(email, password)}
       />
       <div className="text-center font-base ">
-        {`Don't have an account?`}
+        {`Don't have an account? `}
         <Link to="/register" className="font-bold text-slate-800">
           Register
         </Link>

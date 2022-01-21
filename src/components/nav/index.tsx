@@ -3,6 +3,7 @@ import { AuthContext } from "../../contexts/auth.context";
 
 const NavBar = () => {
   const { user } = useContext(AuthContext);
+  console.log(user);
   return (
     <header className="header bg-white border-b-2 border-gray-200 py-4 px-4">
       <div className="header-content flex items-center flex-row">

@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing navbar... should dispaly email when user connected 1`] = `ShallowWrapper {}`;
+
+exports[`Testing navbar... should render correctly with no props 1`] = `ShallowWrapper {}`;

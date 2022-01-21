@@ -59,7 +59,7 @@ const Table = ({ columns, data, action }: Props) => {
           ))}
         </thead>
         <tbody
-          className="text-sm divide-y divide-gray-100"
+          className="text-sm divide-y divide-gray-100 "
           {...getTableBodyProps()}
         >
           {page.map((row, i) => {
@@ -73,7 +73,9 @@ const Table = ({ columns, data, action }: Props) => {
                       {...cell.getCellProps()}
                       key={index}
                     >
-                      {cell.render("Cell")}
+                      <div className="font-base px-2">
+                        {cell.render("Cell")}
+                      </div>
                     </td>
                   );
                 })}
