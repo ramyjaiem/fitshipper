@@ -1,16 +1,22 @@
-import React, { useContext } from "react";
+import React, { ReactComponentElement, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTable, useSortBy, Column, usePagination } from "react-table";
+import {
+  useTable,
+  useSortBy,
+  Column,
+  usePagination,
+  actions,
+} from "react-table";
 import { AddressesContext } from "../contexts/addresses.context";
 import { Address } from "../utils/modules";
 
 interface Props {
   columns: Column<Address>[];
   data: Address[];
-  openModal: Function;
+  action: Function;
 }
 
-const Table = ({ columns, data, openModal }: Props) => {
+const Table = ({ columns, data, action }: Props) => {
   const { deleteAddress } = useContext(AddressesContext);
   const {
     getTableProps,
@@ -80,25 +86,7 @@ const Table = ({ columns, data, openModal }: Props) => {
                     </td>
                   );
                 })}
-                <td className="p-2 whitespace-nowrap">
-                  <button
-                    className="text-indigo-400 hover:text-indigo-600"
-                    onClick={() => {
-                      navigate(`/addresses/edit/${row.original.id}`);
-                    }}
-                  >
-                    Edit
-                  </button>
-                </td>
-
-                <td className="p-2 whitespace-nowrap">
-                  <button
-                    className="text-red-400 hover:text-red-600"
-                    onClick={() => deleteAddress(row.original?.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
+                {action(row.original.id)}
               </tr>
             );
           })}

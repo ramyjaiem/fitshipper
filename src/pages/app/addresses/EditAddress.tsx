@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../../components/Button";
-import ModalContainer from "../../../components/FormModal";
+import AddressForm from "../../../components/forms/AddressForm";
 import PageContainer from "../../../containers/PageContainer";
 import { AddressesContext } from "../../../contexts/addresses.context";
 
@@ -20,9 +20,9 @@ const EditAddress = (props: Props) => {
   return (
     <PageContainer
       title="Create Address"
-      action={<Button label="Remove" onClick={() => navigate(-1)} />}
+      action={<Button label="Back" onClick={() => navigate(-1)} />}
     >
-      <ModalContainer />
+      <AddressForm />
     </PageContainer>
   );
 };

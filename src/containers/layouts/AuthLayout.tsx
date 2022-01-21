@@ -9,7 +9,7 @@ interface Props {
 const AuthLayout = ({ children }: Props) => {
   return (
     <div className="bg-gray-100 h-screen flex flex-col items-center justify-center">
-      <div className="font-bold text-3xl -mt-16 mb-5 text-gray-500">
+      <div className="font-bold text-3xl absolute top-5 left-5 text-gray-500">
         FITSHIPPER
       </div>
       {children}

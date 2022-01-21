@@ -1,4 +1,6 @@
 import React, { createContext, ReactChild, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   deleteAddressService,
   getAddressesService,
@@ -6,6 +8,7 @@ import {
   updateAddressService,
   getActiveAddressService,
 } from "../api/services";
+import { TOASTER_SETTINGS } from "../utils/constants";
 import { Address } from "../utils/modules";
 
 interface Props {
@@ -43,10 +46,21 @@ const AddressesProvider = ({ children }: Props) => {
   const [activeAddress, setActiveAddress] = useState<Address | null>(null);
   const [total, setTotal] = useState<number | null>(null);
   const [search, setSearch] = useState<string>("");
+  const navigate = useNavigate();
 
   // delete selected address by id
   const deleteAddress = async (id: string) => {
-    deleteAddressService(id).then(getAddresses);
+    return deleteAddressService(id)
+      .then(() => {
+        getAddresses("");
+        toast.success("Address deleted successfully !", TOASTER_SETTINGS);
+      })
+      .catch(({ message }) =>
+        toast.error(
+          "We are having trouble deleting your address",
+          TOASTER_SETTINGS
+        )
+      );
   };
 
   // get all addresses
@@ -59,13 +73,23 @@ const AddressesProvider = ({ children }: Props) => {
 
   // save an address
   const saveAddress = async (data: Address) => {
-    saveAddressService(data).then(getAddresses);
+    saveAddressService(data)
+      .then(getAddresses)
+      .then(() => {
+        navigate("/addresses");
+        getAddresses("");
+        toast.success("Address saved successfully !", TOASTER_SETTINGS);
+      });
   };
 
   //edit an address
   const updateAdrress = async (data: Address) => {
     if (data.id) {
-      updateAddressService(data, data.id).then(getAddresses);
+      updateAddressService(data, data.id).then(() => {
+        navigate("/addresses");
+        getAddresses("");
+        toast.success("Address updated successfully !", TOASTER_SETTINGS);
+      });
     }
   };
 

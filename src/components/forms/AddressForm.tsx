@@ -1,22 +1,22 @@
 import React, { MouseEventHandler, useContext, useState } from "react";
-import Input from "./Input";
+import Input from "../Input";
 import {
   AiOutlineClose,
   AiOutlinePlus,
   AiOutlinePlusCircle,
 } from "react-icons/ai";
-import InputArea from "./InputArea";
+import InputArea from "../InputArea";
 import { useForm } from "react-hook-form";
-import Form from "./Form";
+import Form from "../Form";
 import Modal from "react-modal";
-import { AddressesContext } from "../contexts/addresses.context";
-import { transformData } from "../utils/tools";
-import Button from "./Button";
+import { AddressesContext } from "../../contexts/addresses.context";
+import { transformData } from "../../utils/tools";
+import Button from "../Button";
 import { AiOutlineEdit } from "react-icons/ai";
 
 interface Props {}
 
-const ModalContainer = ({}: Props) => {
+const AddressForm = ({}: Props) => {
   const [switchForm, setSwitchForm] = useState(true);
 
   const { saveAddress, updateAdrress, activeAddress } =
@@ -130,4 +130,4 @@ const ModalContainer = ({}: Props) => {
   );
 };
 
-export default ModalContainer;
+export default AddressForm;

@@ -10,6 +10,8 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { TOASTER_SETTINGS } from "../utils/constants";
 
 interface Props {
   children: ReactChild;
@@ -51,6 +53,7 @@ const AuthProvider = ({ children }: Props) => {
       .then((res) => {
         if (res) {
           navigate("/home");
+          toast.success("You are logged In !", TOASTER_SETTINGS);
         }
       })
       .catch((error) => {
@@ -59,8 +62,10 @@ const AuthProvider = ({ children }: Props) => {
           case "auth/invalid-email":
             setErrorMessage("Invalid email");
             break;
-
           case "auth/wrong-password":
+            setErrorMessage("Wrong email or password");
+            break;
+          case "auth/user-not-found":
             setErrorMessage("Wrong email or password");
             break;
         }
@@ -77,10 +82,9 @@ const AuthProvider = ({ children }: Props) => {
       return;
     }
     createUserWithEmailAndPassword(auth, email, password1)
-      .then((res) => {
-        if (res) {
-          navigate("/login");
-        }
+      .then(() => {
+        navigate("/login");
+        toast.success("User created !", TOASTER_SETTINGS);
       })
       .catch((error) => {
         switch (error.code) {
@@ -95,8 +99,15 @@ const AuthProvider = ({ children }: Props) => {
     signOut(auth);
   };
   const resetPassword = async (email: string) => {
-    sendPasswordResetEmail(auth, email);
+    sendPasswordResetEmail(auth, email).then(() => {
+      navigate("/login");
+      toast.success(
+        "Please check your email to reset your password !",
+        TOASTER_SETTINGS
+      );
+    });
   };
+
   return (
     <AuthContext.Provider
       value={{
